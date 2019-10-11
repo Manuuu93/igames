@@ -4,28 +4,48 @@ namespace components;
 
 class View
 {
-	protected $data = [];
+    /**
+     * @var array
+     */
+    protected $data = [];
 
-	public function __set($k, $v)
-	{
-		$this->data[$k] = $v;
-	}
+    /**
+     * @param $k
+     * @param $v
+     */
+    public function __set($k, $v)
+    {
+        $this->data[$k] = $v;
+    }
 
-	public function __get($k)
-	{
-		return $this->data[$k];
-	}
+    /**
+     * @param $k
+     * @return mixed
+     */
+    public function __get($k)
+    {
+        return $this->data[$k];
+    }
 
-	public function __isset($k) {
-		return isset($data[$k]);
-	}
+    /**
+     * @param $k
+     * @return bool
+     */
+    public function __isset($k)
+    {
+        return isset($data[$k]);
+    }
 
-	public function render($template)
-	{
-		ob_start();
-		extract($this->data);
-		include $template;
-		$content = ob_get_clean();
-		return $content;
-	}
-} 
+    /**
+     * @param $template
+     * @return false|string
+     */
+    public function render($template)
+    {
+        ob_start();
+        extract($this->data);
+        include $template;
+        $content = ob_get_clean();
+        return $content;
+    }
+}

@@ -4,24 +4,23 @@ namespace components;
 
 class Config
 {
-	use Singleton;
+    use Singleton;
 
-	protected const CONFIG_DIR_NAME = 'config';
+    protected const CONFIG_DIR_NAME = 'config';
     /**
      * @var array
      */
-	public $data = [];
+    public $data = [];
 
     /**
      * Маппит файлы из каталога CONFIG_DIR_NAME
      * Config constructor.
      */
-	protected function __construct()
-	{
-        $dir = sprintf("%s\\%s", dirname(__DIR__), self::CONFIG_DIR_NAME);
+    protected function __construct()
+    {
+        $dir = sprintf("%s%s%s", dirname(__DIR__), DIRECTORY_SEPARATOR, self::CONFIG_DIR_NAME);
         $catalog = opendir($dir);
-        while ($filename = readdir($catalog)) // перебираем наш каталог
-        {
+        while ($filename = readdir($catalog)) { // перебираем наш каталог
             if ($filename === '.' || $filename === '..') {
                 continue;
             }
@@ -31,7 +30,5 @@ class Config
             $this->data[$configName] = include($filename);
         }
         closedir($catalog);
-
-	}
-
+    }
 }

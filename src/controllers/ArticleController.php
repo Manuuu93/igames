@@ -4,5 +4,5 @@ namespace controllers;
 
 class ArticleController extends BaseController
 {
-    const TABLE = 'articles';
+    public const TABLE = 'articles';
 }

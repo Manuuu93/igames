@@ -6,7 +6,8 @@ use components\Db;
 
 class Championship extends Model
 {
-    const TABLE = 'championships';
+
+    public const TABLE = 'championships';
 
     public $title;
     public $start_date;
@@ -14,9 +15,13 @@ class Championship extends Model
     public $place;
     public $article_id;
 
+    /**
+     * @param $name
+     * @return array
+     */
     public function __get($name)
     {
-        if('results' == $name) {
+        if ('results' == $name) {
             $sql = 'select t.name team, r.points points from ' . Result::TABLE . ' r join ' . Team::TABLE .
                 ' t on r.team_id = t.id where champ_id = :champ_id';
 
