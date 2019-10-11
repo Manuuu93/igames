@@ -4,14 +4,23 @@ namespace models;
 
 use components\Db;
 
+/**
+ * Class Article
+ *
+ * @package Models
+ */
 class Article extends Model
 {
-    const TABLE = 'articles';
+    public const TABLE = 'articles';
 
     public $title;
     public $content;
     public $date;
 
+    /**
+     *
+     * @return mixed
+     */
     public static function findLast()
     {
         $db = Db::instance();

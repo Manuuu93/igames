@@ -1,10 +1,14 @@
 <?php
 
 namespace controllers;
+
 use Models\Player;
 
 class PlayerController extends BaseController
 {
+    /**
+     *
+     */
     public function actionIndex()
     {
         $this->view->players = Player::findAll();
@@ -12,6 +16,9 @@ class PlayerController extends BaseController
         echo $this->view->render(dirname(__DIR__) . '/views/player/index.php');
     }
 
+    /**
+     * @param $id
+     */
     public function actionShow($id)
     {
         $player = Player::findById($id);
@@ -19,5 +26,4 @@ class PlayerController extends BaseController
 
         echo $this->view->render(dirname(__DIR__) . '/views/player/show.php');
     }
-
 }

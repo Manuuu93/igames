@@ -6,6 +6,9 @@ use models\Article;
 
 class SiteController extends BaseController
 {
+    /**
+     *
+     */
     public function actionIndex()
     {
         $this->view->articles = Article::findAll();

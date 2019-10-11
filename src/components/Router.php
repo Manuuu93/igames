@@ -23,7 +23,7 @@ class Router
     /**
      *
      */
-    public function boot()
+    public function boot(): void
     {
         $uri = $this->getRequestUri();
         $method = $this->getRequestMethod();
@@ -74,7 +74,8 @@ class Router
     /**
      * @param array $routeInfo
      */
-    protected function handle(array $routeInfo) {
+    protected function handle(array $routeInfo): void
+    {
         switch ($routeInfo[0]) {
             case FastRoute\Dispatcher::NOT_FOUND:
                 echo 'page not found';
@@ -87,7 +88,7 @@ class Router
                 $vars = $routeInfo[2];
                 list($class, $method) = explode("/", $handler, 2);
                 $class = 'controllers\\' . $class;
-                call_user_func_array(array(new $class, $method), $vars);
+                call_user_func_array(array(new $class(), $method), $vars);
                 break;
         }
     }
