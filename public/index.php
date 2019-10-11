@@ -9,7 +9,7 @@ $config = \components\Config::instance();
 
 // Первичная настройка
 ini_set('display_errors', $config->data['app']['debug']);
-error_reporting(constant($config['app']['debug_level']));
+error_reporting($config->data['app']['debug_level']);
 
 //@todo на di
 $router = new \components\Router();
