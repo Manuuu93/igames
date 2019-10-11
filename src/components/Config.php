@@ -18,7 +18,7 @@ class Config
      */
 	protected function __construct()
 	{
-        $dir = sprintf("%s\\%s", dirname(__DIR__), self::CONFIG_DIR_NAME);
+        $dir = sprintf("%s%s%s", dirname(__DIR__), DIRECTORY_SEPARATOR, self::CONFIG_DIR_NAME);
         $catalog = opendir($dir);
         while ($filename = readdir($catalog)) // перебираем наш каталог
         {
