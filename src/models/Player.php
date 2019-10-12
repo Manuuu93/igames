@@ -4,7 +4,7 @@ namespace models;
 
 class Player extends Model
 {
-    const TABLE = 'players';
+    public const TABLE = 'players';
 
     public $name;
     public $birthday;

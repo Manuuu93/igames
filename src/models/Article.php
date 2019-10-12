@@ -24,7 +24,6 @@ class Article extends Model
     public static function findLast()
     {
         $db = Db::instance();
-
         $sql = sprintf('select * from %s where date = (select max(date) from %s)', static::TABLE, static::TABLE);
         return $db->query($sql, static::class)[0];
     }

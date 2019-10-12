@@ -20,7 +20,7 @@ class Config
     {
         $dir = sprintf("%s%s%s", dirname(__DIR__), DIRECTORY_SEPARATOR, self::CONFIG_DIR_NAME);
         $catalog = opendir($dir);
-        while ($filename = readdir($catalog)) { // перебираем наш каталог
+        while ($filename = readdir($catalog)) {
             if ($filename === '.' || $filename === '..') {
                 continue;
             }

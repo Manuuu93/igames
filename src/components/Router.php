@@ -86,9 +86,9 @@ class Router
             case FastRoute\Dispatcher::FOUND:
                 $handler = $routeInfo[1];
                 $vars = $routeInfo[2];
-                list($class, $method) = explode("/", $handler, 2);
-                $class = 'controllers\\' . $class;
-                call_user_func_array(array(new $class(), $method), $vars);
+                [$class, $method] = explode("/", $handler, 2);
+                $class = 'Controllers\\' . $class;
+                call_user_func_array([new $class(), $method], $vars);
                 break;
         }
     }
