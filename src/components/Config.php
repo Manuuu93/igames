@@ -27,7 +27,7 @@ class Config
             $configName = str_replace('.php', '', $filename);
 
             $filename = sprintf("%s/%s", $dir, $filename);
-            $this->data[$configName] = include_once($filename);
+            $this->data[$configName] = include($filename);
         }
         closedir($catalog);
     }
