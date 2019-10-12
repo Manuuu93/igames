@@ -8,7 +8,7 @@
     "php": ">=7.1.0",
     "nikic/fast-route": "^1.3",
     "vlucas/phpdotenv": "^3.6",
-    "squizlabs/php_codesniffer": "*"
-  },
-
+    "squizlabs/php_codesniffer": "*",
+    "robmorgan/phinx": "^0.11.1"
+  }
 }
