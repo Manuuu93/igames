@@ -4,7 +4,7 @@ namespace models;
 
 class Result
 {
-    const TABLE = 'results';
+    public const TABLE = 'results';
 
     public $champ_id;
     public $team_id;

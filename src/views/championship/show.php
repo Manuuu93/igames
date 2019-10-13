@@ -15,7 +15,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <?php foreach ($championship->results as $result): ?>
+                    <?php foreach ($championship->results as $result) : ?>
                     <th scope="row"><?=$result->team?></th>
                     <td><?=$result->points?></td>
                     <?php endforeach;?>

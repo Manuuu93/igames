@@ -1,6 +1,6 @@
 <?php include_once __DIR__ . '/../layouts/header.php';?>
     <div id="templatemo_content_column_two">
-        <?php foreach ($championships as $ch): ?>
+        <?php foreach ($championships as $ch) : ?>
             <div class="column_two_section">
                 <h1><?=$ch->title?></h1>
                 <p><?=$ch->start_date?> - <?=$ch->end_date?></p>

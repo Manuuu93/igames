@@ -7,7 +7,7 @@ use models\Championship;
 
 /**
  * Class BaseController
- * @package controllers
+ * @package Controllers
  */
 abstract class BaseController
 {

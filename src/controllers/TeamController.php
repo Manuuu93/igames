@@ -6,6 +6,9 @@ use models\Team;
 
 class TeamController extends BaseController
 {
+    /**
+     *
+     */
     public function actionIndex()
     {
         $this->view->teams = Team::findAll();
@@ -13,11 +16,15 @@ class TeamController extends BaseController
         echo $this->view->render(dirname(__DIR__) . '/views/team/index.php');
     }
 
+    /**
+     * @param $id
+     * @throws \Exception
+     */
     public function actionShow($id)
     {
         $team = Team::findById($id);
 
-        if($team) {
+        if ($team) {
             $this->view->team = $team;
         } else {
             throw new \Exception('Нет такой команды');

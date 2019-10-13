@@ -6,14 +6,18 @@ use components\Db;
 
 class Team extends Model
 {
-    const TABLE = 'teams';
+    public const TABLE = 'teams';
 
     public $name;
     public $birthday;
 
-    public function __get($name)
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function __get(string $name)
     {
-        if('players' == $name) {
+        if ('players' === $name) {
             $db = Db::instance();
             $sql = 'select * from players where team_id = :team_id';
 
