@@ -4,9 +4,15 @@ namespace components;
 
 use FastRoute\RouteCollector;
 use FastRoute;
+use Psr\Http\Message\RequestInterface;
 
 class Router
 {
+    /**
+     * @var RequestInterface
+     */
+    protected $request;
+
     /**
      * @var FastRoute\Dispatcher
      */
@@ -14,9 +20,11 @@ class Router
 
     /**
      * Router constructor.
+     * @param RequestInterface $request
      */
-    public function __construct()
+    public function __construct(RequestInterface $request)
     {
+        $this->request = $request;
         $this->dispatcher = FastRoute\simpleDispatcher($this->initRoutes());
     }
 
@@ -25,9 +33,11 @@ class Router
      */
     public function boot(): void
     {
-        $uri = $this->getRequestUri();
-        $method = $this->getRequestMethod();
-        $routeInfo = $this->dispatcher->dispatch($method, $uri);
+//        echo $this->getRequestUri();
+//        echo '<br>';
+//        echo $this->request->getUri();
+
+        $routeInfo = $this->dispatcher->dispatch($this->request->getMethod(), $this->request->getUri()->getPath());
         $this->handle($routeInfo);
     }
 
@@ -44,31 +54,7 @@ class Router
             $r->addRoute('GET', '/players/show/{id:\d+}', 'PlayerController/actionShow');
             $r->addRoute('GET', '/championships', 'ChampionshipController/actionIndex');
             $r->addRoute('GET', '/championships/show/{id:\d+}', 'ChampionshipController/actionShow');
-            // {id} must be a number (\d+)
-            $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
-            // The /{title} suffix is optional
-            $r->addRoute('GET', '/articles/{id:\d+}[/{title}]', 'get_article_handler');
         };
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestUri(): string
-    {
-        $uri = $_SERVER['REQUEST_URI'];
-        if (false !== $pos = strpos($uri, '?')) {
-            $uri = substr($uri, 0, $pos);
-        }
-        return  rawurldecode($uri);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestMethod(): string
-    {
-        return $_SERVER['REQUEST_METHOD'] ?? 'GET';
     }
 
     /**
