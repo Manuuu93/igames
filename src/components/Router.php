@@ -33,10 +33,6 @@ class Router
      */
     public function boot(): void
     {
-//        echo $this->getRequestUri();
-//        echo '<br>';
-//        echo $this->request->getUri();
-
         $routeInfo = $this->dispatcher->dispatch($this->request->getMethod(), $this->request->getUri()->getPath());
         $this->handle($routeInfo);
     }
