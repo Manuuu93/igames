@@ -5,6 +5,8 @@ namespace components;
 use FastRoute\RouteCollector;
 use FastRoute;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response\HtmlResponse;
 
 class Router
 {
@@ -29,16 +31,30 @@ class Router
     }
 
     /**
-     *
+     * @return ResponseInterface
      */
-    public function boot(): void
+    public function handle(): ResponseInterface
     {
-//        echo $this->getRequestUri();
-//        echo '<br>';
-//        echo $this->request->getUri();
-
         $routeInfo = $this->dispatcher->dispatch($this->request->getMethod(), $this->request->getUri()->getPath());
-        $this->handle($routeInfo);
+
+        $response = null;
+        switch ($routeInfo[0]) {
+            case FastRoute\Dispatcher::NOT_FOUND:
+                $response = new HtmlResponse('Not found', 404);
+                break;
+            case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+                $response = new HtmlResponse('method not allowed', 405);
+                break;
+            case FastRoute\Dispatcher::FOUND:
+                $handler = $routeInfo[1];
+                $vars = $routeInfo[2];
+                [$class, $method] = explode("/", $handler, 2);
+                $class = 'Controllers\\' . $class;
+                $response = call_user_func_array([new $class(), $method], $vars);
+                break;
+        }
+
+        return $response;
     }
 
     /**
@@ -55,27 +71,5 @@ class Router
             $r->addRoute('GET', '/championships', 'ChampionshipController/actionIndex');
             $r->addRoute('GET', '/championships/show/{id:\d+}', 'ChampionshipController/actionShow');
         };
-    }
-
-    /**
-     * @param array $routeInfo
-     */
-    protected function handle(array $routeInfo): void
-    {
-        switch ($routeInfo[0]) {
-            case FastRoute\Dispatcher::NOT_FOUND:
-                echo 'page not found';
-                break;
-            case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                echo 'method not allowed';
-                break;
-            case FastRoute\Dispatcher::FOUND:
-                $handler = $routeInfo[1];
-                $vars = $routeInfo[2];
-                [$class, $method] = explode("/", $handler, 2);
-                $class = 'Controllers\\' . $class;
-                call_user_func_array([new $class(), $method], $vars);
-                break;
-        }
     }
 }

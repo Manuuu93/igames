@@ -3,24 +3,27 @@
 namespace controllers;
 
 use models\Team;
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response\HtmlResponse;
 
 class TeamController extends BaseController
 {
     /**
-     *
+     * @return ResponseInterface
      */
-    public function actionIndex()
+    public function actionIndex(): ResponseInterface
     {
         $this->view->teams = Team::findAll();
 
-        echo $this->view->render(dirname(__DIR__) . '/views/team/index.php');
+        return new HtmlResponse($this->view->render(dirname(__DIR__) . '/views/team/index.php'));
     }
 
     /**
      * @param $id
+     * @return ResponseInterface
      * @throws \Exception
      */
-    public function actionShow($id)
+    public function actionShow($id): ResponseInterface
     {
         $team = Team::findById($id);
 
@@ -30,6 +33,6 @@ class TeamController extends BaseController
             throw new \Exception('Нет такой команды');
         }
 
-        echo $this->view->render(dirname(__DIR__) . '/views/team/show.php');
+        return new HtmlResponse($this->view->render(dirname(__DIR__) . '/views/team/show.php'));
     }
 }
