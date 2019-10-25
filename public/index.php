@@ -5,6 +5,7 @@ use Dotenv\Dotenv;
 use components\Config;
 use components\Router;
 use Zend\Diactoros\ServerRequestFactory;
+use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 
 // Подключаем переменные окружения
 Dotenv::create('../')->load();
@@ -19,4 +20,7 @@ $request = ServerRequestFactory::fromGlobals();
 
 //@todo на di
 $router = new Router($request);
-$router->boot();
+$response = $router->handle();
+
+$emitter = new SapiEmitter();
+$emitter->emit($response);

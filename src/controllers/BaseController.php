@@ -24,13 +24,4 @@ abstract class BaseController
         $this->view = new View();
         $this->view->championships = Championship::findAll();
     }
-
-    /**
-     * @param $action
-     * @return mixed
-     */
-    public function action($action)
-    {
-        return $this->$action();
-    }
 }
