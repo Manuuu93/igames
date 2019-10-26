@@ -1,11 +1,13 @@
 <?php
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+use components\middleware\RouterMiddleware;
 use Dotenv\Dotenv;
 use components\Config;
-use components\Router;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
+use Zend\Stratigility\MiddlewarePipe;
 
 // Подключаем переменные окружения
 Dotenv::create('../')->load();
@@ -19,8 +21,9 @@ error_reporting($config->data['app']['debug_level']);
 $request = ServerRequestFactory::fromGlobals();
 
 //@todo на di
-$router = new Router($request);
-$response = $router->handle();
+$pipeline = new MiddlewarePipe();
+$pipeline->pipe(new RouterMiddleware());
+$response = $pipeline->handle($request);
 
 $emitter = new SapiEmitter();
 $emitter->emit($response);
